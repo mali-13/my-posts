@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePostDto, UpdatePostDto } from './post.dto';
 import { CloudStorageService } from '../cloud-storage/cloud-storage.service';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -34,8 +34,18 @@ export class PostsService {
     return `This action returns a #${id} post`;
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+  async update(id: number, updatePostDto: UpdatePostDto) {
+    const post = await this.postRepository.findOneBy({ postId: id });
+
+    if (!post) {
+      throw new NotFoundException('Post not found');
+    }
+
+    post.status = updatePostDto.status;
+    post.image = updatePostDto.image;
+    post.caption = updatePostDto.caption;
+
+    return await this.postRepository.save(post);
   }
 
   remove(id: number) {

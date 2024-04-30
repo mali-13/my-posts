@@ -4,6 +4,7 @@ import * as request from 'supertest';
 import { AppModule } from '../app.module';
 import { CloudStorageService } from '../cloud-storage/cloud-storage.service';
 import { Post, Status } from './post.entity';
+import { UpdatePostDto } from './post.dto';
 
 describe('PostsController (e2e)', () => {
   let app: INestApplication;
@@ -57,6 +58,28 @@ describe('PostsController (e2e)', () => {
       };
 
       expect(createdPost).toMatchObject(expectedPost);
+    });
+  });
+
+  describe('PATCH /post', () => {
+    test('updates post', async () => {
+      const updatePostDto: UpdatePostDto = {
+        image:
+          'https://storage.googleapis.com/post-images-resized-trainspotter/2-05df18a9-54ed-4472-be20-70ad8b5b9ea3-nice.png',
+        postId: 1,
+        status: Status.IMAGE_UPLOADED,
+      };
+
+      const { body: createdPost } = await request(app.getHttpServer())
+        .patch('/posts/1')
+        .send(updatePostDto)
+        .expect(200);
+
+      expect(createdPost).toMatchObject({
+        postId: updatePostDto.postId,
+        status: updatePostDto.status,
+        image: updatePostDto.image,
+      });
     });
   });
 });
