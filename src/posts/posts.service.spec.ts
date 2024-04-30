@@ -1,9 +1,9 @@
 import { PostsService } from './posts.service';
 import { CloudStorageService } from '../cloud-storage/cloud-storage.service';
 import { Repository } from 'typeorm';
-import { Post, Status } from './entities/post.entity';
 import { TestBed } from '@automock/jest';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Post, Status } from './post.entity';
 
 describe('PostsService', () => {
   let service: PostsService;

@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../app.module';
-import { Post, Status } from './entities/post.entity';
 import { CloudStorageService } from '../cloud-storage/cloud-storage.service';
+import { Post, Status } from './post.entity';
 
 describe('PostsController (e2e)', () => {
   let app: INestApplication;

@@ -3,8 +3,7 @@ import { PostsService } from './posts.service';
 import { PostsController } from './posts.controller';
 import { CloudStorageModule } from '../cloud-storage/cloud-storage.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Post } from './entities/post.entity';
-import { Comment } from './entities/comment.entity';
+import { Comment, Post } from './post.entity';
 
 @Module({
   imports: [CloudStorageModule, TypeOrmModule.forFeature([Post, Comment])],

@@ -2,10 +2,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Comment } from './comment.entity';
 
 export enum Status {
   IMAGE_UPLOADING = 'image_uploading',
@@ -31,6 +31,24 @@ export class Post {
 
   @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+}
+
+@Entity()
+export class Comment {
+  @PrimaryGeneratedColumn()
+  commentId: number;
+
+  @Column()
+  content: string;
+
+  @ManyToOne(() => Post, (post) => post.comments)
+  post: Post;
+
+  @Column()
+  creator: string;
 
   @CreateDateColumn()
   createdAt: Date;

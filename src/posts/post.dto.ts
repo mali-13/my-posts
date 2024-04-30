@@ -1,7 +1,6 @@
 import { IsEnum, IsNumber, IsString, IsUrl } from 'class-validator';
-import { Comment } from './entities/comment.entity';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { Post, Status } from './entities/post.entity';
+import { Comment, Post, Status } from './post.entity';
 
 export class CreatePostDto {
   /**
@@ -12,7 +11,7 @@ export class CreatePostDto {
   caption: string;
 
   @ApiProperty({ type: 'string', format: 'binary', required: true })
-  file: Express.Multer.File;
+  file?: Express.Multer.File;
 }
 
 export class UpdatePostDto extends PartialType(CreatePostDto) {
