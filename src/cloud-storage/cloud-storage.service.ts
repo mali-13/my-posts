@@ -46,12 +46,15 @@ export class CloudStorageService {
       .pipe(fileUpload)
       .on('progress', (progress) => {
         console.log(`Progress: ${JSON.stringify(progress)}`);
+        //this.websocketsService.addEvent('progress', '{"postId": 16, "progress": 20}');
       })
       .on('finish', () => {
         console.log('File uploaded successfully.');
+        //this.websocketsService.addEvent('finish', '{"message": "upload successful"}');
       })
       .on('error', (err) => {
         console.log(`Error: ${err}`);
+        //this.websocketsService.addEvent('error', '{"message": "try again"}');
       });
   }
 }
