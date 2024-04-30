@@ -25,7 +25,7 @@ export class PostsController {
     @UploadedImage()
     image: Express.Multer.File,
   ) {
-    return this.postsService.create(createPostDto);
+    return this.postsService.create(createPostDto, image);
   }
 
   @Get()

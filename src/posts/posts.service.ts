@@ -2,15 +2,29 @@ import { Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { CloudStorageService } from '../cloud-storage/cloud-storage.service';
+import { Post } from './entities/post.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PostsService {
-  constructor(private readonly gcsStorageService: CloudStorageService) {}
+  constructor(
+    @InjectRepository(Post)
+    private readonly postRepository: Repository<Post>,
+    private readonly gcsStorageService: CloudStorageService,
+  ) {}
 
-  create(createPostDto: CreatePostDto, image: Express.Multer.File) {
+  async create(createPostDto: CreatePostDto, image: Express.Multer.File) {
+    const post = new Post();
+    post.caption = createPostDto.caption;
+    // Normally extracted form the session/token. Hardcoded here
+    post.creator = 'Rita';
+    const createdPost = await this.postRepository.save(post);
+
     // Asynchronously stream image to cloud storage(bucket)
-    this.gcsStorageService.uploadFile(image, 1);
-    return 'This action adds a new post';
+    this.gcsStorageService.uploadFile(image, createdPost.postId);
+
+    return createdPost;
   }
 
   findAll() {
