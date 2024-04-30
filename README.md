@@ -40,7 +40,7 @@ kubernetes cluster
 
 It currently is also deployed on
 the [staging environment](https://my-posts-app-uewemfrpsa-uw.a.run.app/api#/Posts%20and%20Comments/PostsController_findAll)
-on Google Cloud
+on Google Cloud using gcloud
 
 To deploy the app in production, secrets and environment variables(These include keys to connect to Google Cloud
 services) need to be crated for the production environment.
