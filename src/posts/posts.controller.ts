@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Param,
   Patch,
@@ -49,11 +48,6 @@ export class PostsController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
     return this.postsService.update(+id, updatePostDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.postsService.remove(+id);
   }
 
   @Post(':id/comments')

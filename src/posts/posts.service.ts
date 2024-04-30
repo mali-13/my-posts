@@ -59,10 +59,6 @@ export class PostsService {
     return await this.postRepository.save(post);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
-  }
-
   async createComment(createCommentDto: CreateCommentDto) {
     const post = await this.findOne(createCommentDto.postId);
 
