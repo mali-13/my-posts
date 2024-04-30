@@ -1,0 +1,28 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 30
+      arrivalRate: 5
+      name: Warm up
+    - duration: 30
+      arrivalRate: 5
+      rampTo: 50
+      name: Ramp up load
+    - duration: 30
+      arrivalRate: 50
+      name: Sustained load
+  payload:
+    path: 'dynamic_data.csv'
+    fields:
+      - 'postId'
+scenarios:
+  - name: "Get posts"
+    flow:
+      - get:
+          url: '/posts/{{ postId }}'
+    weight: 1
+  - name: 'Get posts'
+    flow:
+      - get:
+          url: '/posts?page=1&limit=100'
+    weight: 4
