@@ -5,6 +5,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseInterceptors,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
@@ -18,6 +19,7 @@ import {
 import { UploadedImage } from './helper/uploaded-image.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiCreatedResponse } from '@nestjs/swagger';
+import { PageOptionDto } from './helper/page-option.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -36,8 +38,8 @@ export class PostsController {
   }
 
   @Get()
-  findAll() {
-    return this.postsService.findAll();
+  findAll(@Query() pageOptions: PageOptionDto) {
+    return this.postsService.findAll(pageOptions);
   }
 
   @Get(':id')
