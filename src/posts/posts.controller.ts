@@ -9,10 +9,10 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
-import { CreatePostDto } from './dto/create-post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
+import { CreatePostDto, PostDto, UpdatePostDto } from './post.dto';
 import { UploadedImage } from './helper/uploaded-image.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiConsumes, ApiCreatedResponse } from '@nestjs/swagger';
 
 @Controller('posts')
 export class PostsController {
@@ -20,6 +20,8 @@ export class PostsController {
 
   @Post()
   @UseInterceptors(FileInterceptor('file'))
+  @ApiConsumes('multipart/form-data')
+  @ApiCreatedResponse({ type: PostDto })
   create(
     @Body() createPostDto: CreatePostDto,
     @UploadedImage()
