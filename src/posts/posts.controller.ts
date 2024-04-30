@@ -18,10 +18,16 @@ import {
 } from './post.dto';
 import { UploadedImage } from './helper/uploaded-image.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiConsumes, ApiCreatedResponse } from '@nestjs/swagger';
+import {
+  ApiConsumes,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { PageOptionDto } from './helper/page-option.dto';
 
 @Controller('posts')
+@ApiTags('Posts and Comments')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
@@ -38,11 +44,13 @@ export class PostsController {
   }
 
   @Get()
+  @ApiOkResponse({ type: PostDto, isArray: true })
   findAll(@Query() pageOptions: PageOptionDto) {
     return this.postsService.findAll(pageOptions);
   }
 
   @Get(':id')
+  @ApiOkResponse({ type: PostDto })
   findOne(@Param('id') id: string) {
     return this.postsService.findOne(+id);
   }
