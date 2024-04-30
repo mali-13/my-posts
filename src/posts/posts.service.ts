@@ -30,8 +30,10 @@ export class PostsService {
     return `This action returns all posts`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  async findOne(id: number) {
+    return this.postRepository
+      .findOneByOrFail({ postId: id })
+      .catch(() => new NotFoundException(`Post with id ${id} not found`));
   }
 
   async update(id: number, updatePostDto: UpdatePostDto) {
