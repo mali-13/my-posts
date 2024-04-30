@@ -1,10 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { CloudStorageService } from '../cloud-storage/cloud-storage.service';
 
 @Injectable()
 export class PostsService {
-  create(createPostDto: CreatePostDto) {
+  constructor(private readonly gcsStorageService: CloudStorageService) {}
+
+  create(createPostDto: CreatePostDto, image: Express.Multer.File) {
+    // Asynchronously stream image to cloud storage(bucket)
+    this.gcsStorageService.uploadFile(image, 1);
     return 'This action adds a new post';
   }
 
