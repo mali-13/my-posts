@@ -1,4 +1,4 @@
-import { IsEnum, IsNumber, IsString, IsUrl } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsString, IsUrl } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { Comment, Post, Status } from './post.entity';
 
@@ -81,6 +81,23 @@ export class PostDto implements Omit<Post, 'comments'> {
   status: Status;
 }
 
+export class CreateCommentDto {
+  /**
+   * Content of the comment
+   * @example 'Beautiful!'
+   */
+  @IsNotEmpty()
+  @IsString()
+  content: string;
+
+  /**
+   * ID of the post to which the comment belongs
+   * @example 1
+   */
+  @IsNumber()
+  postId: number;
+}
+
 export class CommentDto implements Omit<Comment, 'post'> {
   /**
    * ID of the comment
@@ -102,7 +119,7 @@ export class CommentDto implements Omit<Comment, 'post'> {
 
   /**
    * Creator of the comment
-   * @example 'JaneDoe'
+   * @example 'Matia Cohen'
    */
   creator: string;
 

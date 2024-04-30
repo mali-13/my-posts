@@ -1,15 +1,17 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreatePostDto, UpdatePostDto } from './post.dto';
+import { CreateCommentDto, CreatePostDto, UpdatePostDto } from './post.dto';
 import { CloudStorageService } from '../cloud-storage/cloud-storage.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Post } from './post.entity';
+import { Comment, Post } from './post.entity';
 
 @Injectable()
 export class PostsService {
   constructor(
     @InjectRepository(Post)
     private readonly postRepository: Repository<Post>,
+    @InjectRepository(Comment)
+    private readonly commentRepository: Repository<Comment>,
     private readonly gcsStorageService: CloudStorageService,
   ) {}
 
@@ -31,9 +33,16 @@ export class PostsService {
   }
 
   async findOne(id: number) {
-    return this.postRepository
-      .findOneByOrFail({ postId: id })
-      .catch(() => new NotFoundException(`Post with id ${id} not found`));
+    const post = await this.postRepository.findOne({
+      where: { postId: id },
+      relations: { comments: true },
+    });
+
+    if (!post) {
+      throw new NotFoundException('Post not found');
+    }
+
+    return post;
   }
 
   async update(id: number, updatePostDto: UpdatePostDto) {
@@ -52,5 +61,17 @@ export class PostsService {
 
   remove(id: number) {
     return `This action removes a #${id} post`;
+  }
+
+  async createComment(createCommentDto: CreateCommentDto) {
+    const post = await this.findOne(createCommentDto.postId);
+
+    const comment = new Comment();
+    comment.content = createCommentDto.content;
+    // Normally extracted form the session/token. Hardcoded here
+    comment.creator = 'Matia';
+    comment.post = post;
+
+    return this.commentRepository.save(comment);
   }
 }
