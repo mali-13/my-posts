@@ -13,7 +13,8 @@ When the streaming ends, a Cloud Function is triggered. It resizes, converts the
 to Cloud Storage(resizedBucket). Finally, the Cloud Function issues a `PATCH /posts/:postId` to update the post with the
 image url.
 
-![Sequence Diagram](https://storage.googleapis.com/post-images-trainspotter/image-upload.png)
+![image](https://github.com/mali-13/my-posts/assets/150823014/4068a06c-710a-438a-b20b-0bd9842f16bf)
+
 
 To communicate the upload progress **Websockets** are used. The backend emits progress and finish events to User. In
 case of
