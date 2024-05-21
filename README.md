@@ -2,9 +2,9 @@
 
 Allows users to **create** image posts and **comment** on them
 
-- [view posts](https://my-posts-app-uewemfrpsa-uw.a.run.app/api#/Posts%20and%20Comments/PostsController_findAll)
-- [create post](https://my-posts-app-uewemfrpsa-uw.a.run.app/api#/Posts%20and%20Comments/PostsController_create)
-- [comment on post](https://my-posts-app-uewemfrpsa-uw.a.run.app/api#/Posts%20and%20Comments/PostsController_createComment)
+- [view posts](https://my-posts-vve6y6x2ka-as.a.run.app/api#/Posts%20and%20Comments/PostsController_findAll)
+- [create post](https://my-posts-vve6y6x2ka-as.a.run.app/api#/Posts%20and%20Comments/PostsController_create)
+- [comment on post](https://my-posts-vve6y6x2ka-as.a.run.app/api#/Posts%20and%20Comments/PostsController_createComment)
 
 # Design
 
